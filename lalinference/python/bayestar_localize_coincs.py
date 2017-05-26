@@ -146,7 +146,7 @@ for int_coinc_event_id, event in event_source.items():
             chain_dump = None
         try:
             sky_map = localize(
-                event, opts.waveform, opts.f_low, opts.min_distance,
+                event, opts.waveform, opts.f_low, opts.f_high, opts.min_distance,
                 opts.max_distance, opts.prior_distance_power, opts.cosmology,
                 method=method, nside=opts.nside, chain_dump=chain_dump,
                 enable_snr_series=opts.enable_snr_series,

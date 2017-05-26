@@ -120,7 +120,7 @@ for graceid, event in events.gracedb.open(gracedb, graceids).items():
         # perform sky localization
         log.info("starting sky localization")
         sky_map = rasterize(localize(
-            event, opts.waveform, opts.f_low, opts.min_distance,
+            event, opts.waveform, opts.f_low, opts.f_high, opts.min_distance,
             opts.max_distance, opts.prior_distance_power, opts.cosmology,
             method=opts.method, nside=opts.nside,
             chain_dump=chain_dump, enable_snr_series=opts.enable_snr_series,

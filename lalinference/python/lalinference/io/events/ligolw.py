@@ -82,7 +82,7 @@ class LigoLWEventSource(OrderedDict, EventSource):
         super(LigoLWEventSource, self).__init__(
             self._make_events(doc, psd_file, path, coinc_def))
 
-    _template_keys = '''mass1 mass2
+    _template_keys = '''mass1 mass2 f_final
                         spin1x spin1y spin1z spin2x spin2y spin2z'''.split()
 
     _invert_phases = {
@@ -174,6 +174,7 @@ class LigoLWEventSource(OrderedDict, EventSource):
                 raise ValueError(
                     'Template arguments are not identical for all detectors!')
             template_args = template_args[0]
+            template_args['f_high'] = template_args.pop('f_final')
 
             invert_phases = self._phase_convention(
                 program_for_process_id[coinc.process_id])

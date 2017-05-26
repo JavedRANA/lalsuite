@@ -132,7 +132,7 @@ def localize_emcee(
 
 
 def localize(
-        event, waveform, f_low,
+        event, waveform, f_low, f_high=None,
         min_distance=None, max_distance=None, prior_distance_power=None,
         cosmology=False, method='toa_phoa_snr', nside=-1, chain_dump=None,
         enable_snr_series=False, f_high_truncate=1.0):
@@ -142,6 +142,9 @@ def localize(
     Returns a 'NESTED' ordering HEALPix image as a Numpy array.
     """
 
+    template_args = event.template_args.copy()
+    if f_high is None: f_high = event.template_args['f_high']
+    else: template_args['f_high'] = f_high
     ifos = [single.instrument for single in event.singles]
 
     # Extract SNRs from table.
@@ -163,7 +166,7 @@ def localize(
                                    for psd in psds]
 
     log.debug('calculating templates')
-    H = filter.sngl_inspiral_psd(waveform, f_min=f_low, **event.template_args)
+    H = filter.sngl_inspiral_psd(waveform, f_min=f_low, **template_args)
 
     log.debug('calculating noise PSDs')
     HS = [filter.signal_psd_series(H, S) for S in psds]
